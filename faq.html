@@ -22,29 +22,79 @@ a { text-decoration:none; }
 header {
   background: var(--primary-color);
   padding: 15px 40px;
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: sticky;
-  top:0;
-  z-index:1000;
+  top: 0;
+  z-index: 1000;
   box-shadow: 0 4px 10px rgba(0,0,0,0.1);
 }
-header h1 a { color:white; font-size:1.8rem; font-weight:700; }
-nav { display:flex; gap:20px; }
-nav a { color:white; font-weight:500; position:relative; transition:0.3s; }
+
+header h1 a { 
+  color: white; 
+  font-size: 1.8rem; 
+  font-weight: 700; 
+}
+
+nav { 
+  display: flex; 
+  gap: 20px; 
+}
+
+nav a { 
+  color: white; 
+  font-weight: 500; 
+  position: relative; 
+  transition: 0.3s; 
+}
+
 nav a::after {
-  content:'';
-  display:block;
-  height:2px;
+  content: '';
+  display: block;
+  height: 2px;
   background: var(--accent-color);
-  width:0;
-  position:absolute;
-  bottom:-4px;
-  left:0;
+  width: 0;
+  position: absolute;
+  bottom: -4px;
+  left: 0;
   transition: width 0.3s;
 }
-nav a:hover::after { width:100%; }
+
+nav a:hover::after { width: 100%; }
+
+/* Hamburger */
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.hamburger div {
+  width: 25px;
+  height: 3px;
+  background: white;
+  border-radius: 2px;
+  transition: all 0.3s;
+}
+
+/* Responsive */
+@media(max-width:768px){
+  nav { 
+    display: none; 
+    flex-direction: column; 
+    gap: 15px; 
+    background: var(--primary-color); 
+    position: absolute; 
+    top: 60px; 
+    right: 0; 
+    padding: 15px 30px; 
+    border-radius: 0 0 0 10px; 
+  }
+  nav.active { display: flex; }
+  .hamburger { display: flex; }
+}
 
 /* Hero */
 .hero {
@@ -92,13 +142,21 @@ footer { background:var(--primary-color); color:white; text-align:center; paddin
 
 <header>
   <h1><a href="index.html">Soluciones Totales</a></h1>
-  <nav>
+
+  <div class="hamburger" onclick="toggleMenu()">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+
+  <nav id="navMenu">
     <a href="index.html">Inicio</a>
     <a href="servicios.html">Servicios</a>
     <a href="contacto.html">Contacto</a>
     <a href="faq.html">FAQ</a>
   </nav>
 </header>
+
 
 <section class="hero">
   <h2>Preguntas Frecuentes</h2>
@@ -115,7 +173,7 @@ footer { background:var(--primary-color); color:white; text-align:center; paddin
 
   <details>
     <summary>¿Cuánto demora el proceso de anulación?</summary>
-    <p>Depende de la entidad, pero normalmente entre 3 a 15 días. A veces menos si el error es evidente.</p>
+    <p>Depende de la entidad, pero normalmente es lo especificado por la ley.</p>
   </details>
 
   <details>
@@ -155,6 +213,10 @@ const observer = new IntersectionObserver((entries)=>{
 }, {threshold:0.2});
 
 document.querySelectorAll('.hero h2, .hero p, .faq-section h3, details').forEach(el=>observer.observe(el));
+
+function toggleMenu() {
+  document.getElementById('navMenu').classList.toggle('active');
+}
 </script>
 
 </body>
